@@ -1,0 +1,24 @@
+if [ "setup" = "$1" ]; then
+    # You have to run this script once to setup your environment.
+    echo "***Running setup***"
+    echo "***Installing virtualenv***"
+    pip install virtualenv
+    echo "***Creating virtual environment***"
+    virtualenv .venv
+    echo "***Activating virtual environment***"
+    source .venv/bin/activate
+    echo "***Installing dependencies***"
+    pip install -r requirements.txt
+    echo "***Setup complete***"
+    if [ "run" = "$2" ]; then
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+        echo "***Running Server***"
+        fi
+fi
+
+if [ "test" = "$1" ]; then
+    echo "***Running test***"
+    pytest -v -W ignore::DeprecationWarning
+fi
+
+echo "To start the server run: ./cli.sh run"

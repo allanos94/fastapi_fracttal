@@ -21,4 +21,14 @@ if [ "test" = "$1" ]; then
     pytest -v -W ignore::DeprecationWarning
 fi
 
+if [ "stop" = "$1" ]; then
+    echo "***Stopping server***"
+    kill $(lsof -t -i:8000)
+fi
+
+if [ "uninstall" = "$1" ]; then
+    echo "***Uninstalling virtual environment***"
+    rm -rf .venv
+fi
+
 echo "To start the server run: ./cli.sh run"
